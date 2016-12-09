@@ -1,0 +1,20 @@
+I will be using this file to write up what I want to include in my poster tomorrow as i format it in powerpoint on the MAC
+
+	was going to use libreOffice but it is about as terrible as usual so I will use the mac tomorrow
+
+-Abstract:
+	Instagram has become a wildly successful social networking platform that allows users to post and share social media content in the form of images and captions. Every user on the site can gain followers through posting likeable images. Every image on instagram has the ability to be liked by any other person. Any single user  does not need to follow another user to like their pictures, however, the likelihood of a follower liking a picture is much higher, as those images will appear in the users feed. 
+	"Instagram famous" has become a viral term and many people in our generation are looking to build a large following on the platform through more engaging and interesting photographs.
+	For my project I aimed to analyze and study instagram users as well as the content in which they posted to see if a generated Intelligent System could learn and decipher what images would be successful and what images would not be successful when posted for a given user.   	
+
+-Problem Description:
+
+-Methods:
+
+-Results:
+
+-Conclusions:
+
+-References:
+
+-Acknowledgement:
