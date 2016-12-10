@@ -1,25 +1,34 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html>
   <head>
-    <meta charset="UTF-8">
-    <title>Cs5660ai by jfelzone</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Cs5660ai</h1>
-      <h2 class="project-tagline">a repository/website to publish my cs5660 AI final project</h2>
-      <a href="https://github.com/jfelzone/cs5660AI" class="btn">View on GitHub</a>
-      <a href="https://github.com/jfelzone/cs5660AI/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/jfelzone/cs5660AI/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <section class="main-content">
-      <h1>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Gram Cracker  by jfelzone</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Gram Cracker </h1>
+        <h2>a project using image recognition with machine learning to predict Instagram Image success</h2>
+        <a href="https://github.com/jfelzone/cs5660AI" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
 <a id="welcome-to-the-cs5660_ai-instagram-github-wiki" class="anchor" href="#welcome-to-the-cs5660_ai-instagram-github-wiki" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to the cs5660_AI Instagram Github Wiki!</h1>
 
 <p>This was my final class project for our Intelligent Systems class.
@@ -41,8 +50,7 @@ For this project my goal was to analyze and model the growing explosive social m
 <p>My initial approach for this project was to use Artificial Neural Networks to analyze images and see if an underlying model existed on the appearance of an image within a user account to successfully determine the success that a given image would have.</p>
 
 <p>Neural Network Structure:
-<img src="cs5660AI/images/neuralNet.jpeg" alt="alt text" title="Neural Network">
-<img src="https://github.com/jfelzone/cs5660AI/blob/master/images/neuralNet.jpeg" alt="ANN"></p>
+<img src="https://github.com/jfelzone/cs5660AI/blob/master/images/neuralNet.jpeg?raw=true" alt="ANN"></p>
 
 <p>The first thing needed was to gather the data. To gather the data I implemented two main libraries and techniques. I used pyautogui, pytesseract, and PIL to gather my images from Instagram.</p>
 
@@ -62,11 +70,11 @@ For this project my goal was to analyze and model the growing explosive social m
 <h5>
 <a id="pytesseract-like-extraction" class="anchor" href="#pytesseract-like-extraction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pytesseract like extraction:</h5>
 
-<p><img src="https://github.com/jfelzone/cs5660_AI/blob/master/images/likeExtract.png" alt="alt text" title="like extract"></p>
+<p><img src="https://github.com/jfelzone/cs5660AI/blob/master/images/likeExtract.png?raw=true" alt="Like Extract"></p>
 
 <p>A video of the file <strong>gatherInsta.py</strong> in action can be seen below: (this shows the gui manip in action, click image to follow link to YouTube)</p>
 
-<p><a href="http://www.youtube.com/watch?v=hiEfYRPM93M"><img src="http://img.youtube.com/vi/hiEfYRPM93M/0.jpg" alt="IMAGE ALT TEXT HERE"></a></p>
+<p><a href="https://www.youtube.com/watch?v=hiEfYRPM93M&amp;t=62s"><img src="https://github.com/jfelzone/cs5660AI/blob/master/images/imageGather.png?raw=true" alt="Video"></a></p>
 
 <h3>
 <a id="pre-processing-observations-account-behavor-analysis" class="anchor" href="#pre-processing-observations-account-behavor-analysis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pre-Processing Observations, Account Behavor Analysis:</h3>
@@ -80,12 +88,12 @@ within this file I used the following libraries:</p>
 
 <p>Using matplot lib I was able to generate several scatter plot graphs as well as numpy to calculate the behavor of an account over time. What was observed is that typically speaking an account that has gained traction will have the following scatter plot representation:</p>
 
-<p><img src="https://github.com/jfelzone/cs5660_AI/blob/master/images/plotOverTimeNeg.png" alt="alt text" title="negative regression"></p>
+<p><img src="https://github.com/jfelzone/cs5660AI/blob/master/images/plotOverTimeNeg.png?raw=true" alt="Neg Res" title="negative regression"></p>
 
 <p>We can observe from this image that typically as an account gains traction the increase in likes over time generally increases. As the x axis increases on the graph we are seeing a further and further look back in time for the given Instagram account.
 About 70% of the accounts that I pulled data for had the following format with a negative slope on the regression line.
 However there were a few with the following format as well:
-<img src="https://github.com/jfelzone/cs5660_AI/blob/master/images/plotOverTimePos.png" alt="alt text" title="positive regression"></p>
+<img src="https://github.com/jfelzone/cs5660AI/blob/master/images/plotOverTimePos.png?raw=true" alt="Positive Regression" title="positive regression"></p>
 
 <p>As we can observe, there is very little correlation amongst the images as well as a positive regression line. This would lead us to assume that there will be inherant errer within our results as we do not have images that seem to follow and overly distinct pattern. Thus, initally I hypothesized that our margin of error could be quite large on images that do not follow a consisten like count over time.</p>
 
@@ -144,13 +152,73 @@ I needed to import the following lines of code to run the algorithm:</p>
 
 <p>I loaded the images the same way as I did using PyBrain and found a drastic speed boost using Sci-Kit learn. I could load 4 times as many images in a sixth of the time.</p>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/jfelzone/cs5660AI">Cs5660ai</a> is maintained by <a href="https://github.com/jfelzone">jfelzone</a>.</span>
+<p>With this increased speed boost, and ease of access I then decided to test several different algorithms. 
+These are found in the following files: <strong>svmInsta.py</strong> <strong>randomForestInsta.py</strong> where I tested my results using both SVM and Random Forest Algorithms.
+The results are shown below:</p>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
+<p><img src="https://github.com/jfelzone/cs5660AI/blob/master/images/results.png?raw=true" alt="results"></p>
 
-    </section>
+<p>The second metric was more of a curiosity thing on my part. I wanted to know the percentage of the time that the algorithm predicted within the correct number of digits as well. We would expect this to be much higher and it indeed was. </p>
+
+<h3>
+<a id="my-final-steps" class="anchor" href="#my-final-steps" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>My final steps</h3>
+
+<p>At this point, I had gotten some very interesting results. I would never have expected a Random Forest algorithm to handle image recognition better than a neural network, however, that was the case. My lowest scientific margin of error was found using a random forest. Where on average my model was predicting off by only 38%.</p>
+
+<p>At this point, I dove down one more rabbit hole. I wanted to be able to load more images in order to increase my training set and thus increase my accuracy. To do this I used the <strong>imageReduction.py</strong> script. </p>
+
+<p>This file had one main difference. It shrunk the features of the images by converting them to a grey scale image. This code is show below:</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">def</span> <span class="pl-en">smallImageLoad</span>(<span class="pl-smi">path</span>):
+    image <span class="pl-k">=</span> Image.open(path).convert(<span class="pl-s"><span class="pl-pds">'</span>L<span class="pl-pds">'</span></span>)
+    pix <span class="pl-k">=</span> np.asarray(image)
+    oneDpixelArray <span class="pl-k">=</span> []
+    <span class="pl-k">for</span> i <span class="pl-k">in</span> pix:
+        <span class="pl-k">for</span> j <span class="pl-k">in</span> i:
+            oneDpixelArray.append(j)
+
+    <span class="pl-k">return</span> oneDpixelArray</pre></div>
+
+<p>This code thus shrunk my 1D arrays from 270,000 elements to only 90,000 and I was able to load many more images into memory in order to run my final results.</p>
+
+<p>With this improved data set, I found an increase in my predictions.</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-c1">print</span> <span class="pl-s"><span class="pl-pds">"</span>Training the classifier<span class="pl-pds">"</span></span>
+        <span class="pl-c"># i want to see how slow NN is now</span>
+        <span class="pl-c">#clf = MLPClassifier(activation='logistic', solver='lbfgs', alpha=0.001, hidden_layer_sizes=(35, 20), random_state=1, max_iter=1000)</span>
+        clf <span class="pl-k">=</span> RandomForestClassifier(<span class="pl-v">n_estimators</span><span class="pl-k">=</span><span class="pl-c1">500</span>)
+        clf.fit(<span class="pl-c1">X</span>, y)</pre></div>
+
+<p>After running both the Neural Network and Random Forests I got the following improved results:</p>
+
+<h4>
+<a id="neural-network-margin-of-error-20" class="anchor" href="#neural-network-margin-of-error-20" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Neural Network Margin of Error: 20%</h4>
+
+<h4>
+<a id="random-forest-margin-of-error-22" class="anchor" href="#random-forest-margin-of-error-22" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Random Forest Margin of Error 22%</h4>
+
+<h3>
+<a id="in-conclusion" class="anchor" href="#in-conclusion" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>In Conclusion</h3>
+
+<p>As we can conclude, I got some interesting results from this project as well as developed a baseline framework for continuing to pursue an algorithm that could predict Instagram image success within a margin of error of as low as 5% or 10%. That will be my goal in the continuation of this project after the course of the class. I intend to look into other features that could be added to training set in order to get an even higher prediction accuracy.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/jfelzone/cs5660AI/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/jfelzone/cs5660AI/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/jfelzone/cs5660AI"></a> is maintained by <a href="https://github.com/jfelzone">jfelzone</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
 
   
   </body>
