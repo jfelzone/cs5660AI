@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Cs5660ai by jfelzone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Cs5660ai</h1>
+      <h2 class="project-tagline">a repository/website to publish my cs5660 AI final project</h2>
+      <a href="https://github.com/jfelzone/cs5660AI" class="btn">View on GitHub</a>
+      <a href="https://github.com/jfelzone/cs5660AI/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/jfelzone/cs5660AI/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="welcome-to-the-cs5660_ai-instagram-github-wiki" class="anchor" href="#welcome-to-the-cs5660_ai-instagram-github-wiki" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to the cs5660_AI Instagram Github Wiki!</h1>
+
+<p>This was my final class project for our Intelligent Systems class.
+For this project my goal was to analyze and model the growing explosive social media website Instagram.</p>
+
+<h3>
+<a id="the-question" class="anchor" href="#the-question" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The Question:</h3>
+
+<p>is there an underlying model beneath the pixels of every Instagram account that could be extracted through image recognition and image modeling to successfully predict the number of likes that a user would get on a new image added to their account?</p>
+
+<h3>
+<a id="the-objective" class="anchor" href="#the-objective" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The Objective:</h3>
+
+<p>to create an intelligent system that can look at a new user's picture and predict the number of likes it would receive.</p>
+
+<h3>
+<a id="the-approach" class="anchor" href="#the-approach" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The Approach:</h3>
+
+<p>My initial approach for this project was to use Artificial Neural Networks to analyze images and see if an underlying model existed on the appearance of an image within a user account to successfully determine the success that a given image would have.</p>
+
+<p>Neural Network Structure:
+<img src="cs5660AI/images/neuralNet.jpeg" alt="alt text" title="Neural Network">
+<img src="https://github.com/jfelzone/cs5660AI/blob/master/images/neuralNet.jpeg" alt="ANN"></p>
+
+<p>The first thing needed was to gather the data. To gather the data I implemented two main libraries and techniques. I used pyautogui, pytesseract, and PIL to gather my images from Instagram.</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> pyautogui
+<span class="pl-k">import</span> pytesseract
+<span class="pl-k">from</span> <span class="pl-c1">PIL</span> <span class="pl-k">import</span> Image</pre></div>
+
+<h3>
+<a id="gathering-the-data" class="anchor" href="#gathering-the-data" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Gathering the Data:</h3>
+
+<p>Before using the three libraries above I actually attempted to use the Instagram API, but quickly read and discovered that the number of API calls I could make an hour simply wasn't going to be enough for the amount of data that I wished to collect. Thus my reasoning for using the above libraries.</p>
+
+<p>Pyautogui is a python library that allows for the manipulation and usage of the gui features of your computer (such as your mouse and keyboard). I used this library (along with PIL imaging library) to manipulate the browser on my computer screen to scroll through instagram accounts, and take screenshots of each picture within the account. This was how I gathered my images.</p>
+
+<p>I then used pytesseract to extract the number of likes from the screenshots that I took. The library is a wrapper to Google's OCR and allows for text extraction from images. With enlarged and zoomed screenshots I gained very high accuracy in being able to extract likes from an image. Essentially I was detecting the below piece highlighted in red:</p>
+
+<h5>
+<a id="pytesseract-like-extraction" class="anchor" href="#pytesseract-like-extraction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pytesseract like extraction:</h5>
+
+<p><img src="https://github.com/jfelzone/cs5660_AI/blob/master/images/likeExtract.png" alt="alt text" title="like extract"></p>
+
+<p>A video of the file <strong>gatherInsta.py</strong> in action can be seen below: (this shows the gui manip in action, click image to follow link to YouTube)</p>
+
+<p><a href="http://www.youtube.com/watch?v=hiEfYRPM93M"><img src="http://img.youtube.com/vi/hiEfYRPM93M/0.jpg" alt="IMAGE ALT TEXT HERE"></a></p>
+
+<h3>
+<a id="pre-processing-observations-account-behavor-analysis" class="anchor" href="#pre-processing-observations-account-behavor-analysis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pre-Processing Observations, Account Behavor Analysis:</h3>
+
+<p>Now, with the data in my hand, I was ready to jump into the algorithm and prediciton analysis of the data. However, before doing this, I did an inital analysis on the behavior of various accounts over time. This is shown in the <strong>accountPlotsOverTime.py</strong> file.
+within this file I used the following libraries:</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> matplotlib.pyplot <span class="pl-k">as</span> plt
+<span class="pl-k">import</span> numpy <span class="pl-k">as</span> np
+<span class="pl-k">import</span> time</pre></div>
+
+<p>Using matplot lib I was able to generate several scatter plot graphs as well as numpy to calculate the behavor of an account over time. What was observed is that typically speaking an account that has gained traction will have the following scatter plot representation:</p>
+
+<p><img src="https://github.com/jfelzone/cs5660_AI/blob/master/images/plotOverTimeNeg.png" alt="alt text" title="negative regression"></p>
+
+<p>We can observe from this image that typically as an account gains traction the increase in likes over time generally increases. As the x axis increases on the graph we are seeing a further and further look back in time for the given Instagram account.
+About 70% of the accounts that I pulled data for had the following format with a negative slope on the regression line.
+However there were a few with the following format as well:
+<img src="https://github.com/jfelzone/cs5660_AI/blob/master/images/plotOverTimePos.png" alt="alt text" title="positive regression"></p>
+
+<p>As we can observe, there is very little correlation amongst the images as well as a positive regression line. This would lead us to assume that there will be inherant errer within our results as we do not have images that seem to follow and overly distinct pattern. Thus, initally I hypothesized that our margin of error could be quite large on images that do not follow a consisten like count over time.</p>
+
+<h3>
+<a id="the-meat-of-it-algorithm-time" class="anchor" href="#the-meat-of-it-algorithm-time" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The Meat of It: Algorithm Time:</h3>
+
+<p>The first neural network library that I used was a python Neural Network library called PyBrain. The usage for this library can be seen in the following file <strong>neuralNetwork.py</strong>
+To import pybrain the following import statements were use:</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> pyautogui
+<span class="pl-k">from</span> pybrain.datasets.supervised <span class="pl-k">import</span> SupervisedDataSet 
+<span class="pl-k">from</span> pybrain.tools.shortcuts <span class="pl-k">import</span> buildNetwork
+<span class="pl-k">from</span> pybrain.supervised.trainers <span class="pl-k">import</span> BackpropTrainer
+<span class="pl-k">import</span> cv2
+<span class="pl-k">import</span> time
+<span class="pl-k">import</span> math</pre></div>
+
+<p>These imports allowed me to build a neural network within pybrain. I used cv2 to read in images and then convert them into one dimensional arrays of RGB pixel values.</p>
+
+<p>We can see the code in the file starting on line 73 which added samples to the neural network based on the loadImage function that generated the list/array of pixel values:</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">for</span> i <span class="pl-k">in</span> <span class="pl-c1">range</span>(<span class="pl-c1">0</span>,<span class="pl-c1">21</span>):
+        <span class="pl-k">try</span>:
+            ds.addSample(loadImage(imgdirectory<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">'</span>img_<span class="pl-pds">'</span></span><span class="pl-k">+</span><span class="pl-c1">str</span>(i)<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">'</span>.png<span class="pl-pds">'</span></span>), (imgHash[<span class="pl-s"><span class="pl-pds">'</span>img_<span class="pl-pds">'</span></span><span class="pl-k">+</span><span class="pl-c1">str</span>(i)<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">'</span>.png<span class="pl-pds">'</span></span>],))
+        <span class="pl-k">except</span>:
+            <span class="pl-c1">print</span> <span class="pl-s"><span class="pl-pds">"</span>Image does not exist, cannot be added to training data<span class="pl-pds">"</span></span>
+
+    trainer <span class="pl-k">=</span> BackpropTrainer(net, ds)
+    error <span class="pl-k">=</span> <span class="pl-c1">10</span>
+    iteration <span class="pl-k">=</span> <span class="pl-c1">0</span>
+    <span class="pl-k">while</span> error <span class="pl-k">&gt;</span> <span class="pl-c1">0.001</span>:
+        error <span class="pl-k">=</span> trainer.train()
+        iteration <span class="pl-k">+=</span> <span class="pl-c1">1</span>
+        <span class="pl-c1">print</span> <span class="pl-s"><span class="pl-pds">"</span>Iteration: <span class="pl-c1">{0}</span> Error <span class="pl-c1">{1}</span><span class="pl-pds">"</span></span>.format(iteration, error)</pre></div>
+
+<p>This library was moderately successful when tested. I had an average margin of error of 30.3% prediction. This metric was derived from scientific error based on the comparison of the actual result and the experimental result and then calculating the error between them. This was a fairly small margin however I was only able to train 20 images in 6.7 hours.
+I needed to find something better.</p>
+
+<h3>
+<a id="the-sci-kit-learn-stack" class="anchor" href="#the-sci-kit-learn-stack" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The Sci-Kit Learn Stack:</h3>
+
+<p>At this point in my project I decided I would try to use Sci-Kit learn to test the speed performance in comparison to PyBrain. PyBrain was advertised to be extremely fast and scalable, thus I assumed it would be one of the better libraries, and Sci-Kit learn says on its documentation page that it is not industry speed standard. However, after reading that Sci-Kit learn is built on top of numpy and scipy I figured there was potential for not only a higher performance in speed, but also an increased performance in accuracy. </p>
+
+<p>Thus, I created the following first test file using Sci-Kit Learn: <strong>sciKitNeuralNetwork.py</strong>
+I needed to import the following lines of code to run the algorithm:</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">from</span> sklearn.neural_network <span class="pl-k">import</span> MLPClassifier
+<span class="pl-k">import</span> time
+<span class="pl-k">import</span> cv2
+<span class="pl-k">import</span> random</pre></div>
+
+<p>In order to call the Neural Network classifier (MLP; Multi-Layered Perceptron) I ran the following code on lines 78 and 79:</p>
+
+<div class="highlight highlight-source-python"><pre>clf <span class="pl-k">=</span> MLPClassifier(<span class="pl-v">activation</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>logistic<span class="pl-pds">'</span></span>, <span class="pl-v">solver</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>lbfgs<span class="pl-pds">'</span></span>, <span class="pl-v">alpha</span><span class="pl-k">=</span><span class="pl-c1">0.001</span>, <span class="pl-v">hidden_layer_sizes</span><span class="pl-k">=</span>(<span class="pl-c1">35</span>, <span class="pl-c1">20</span>), <span class="pl-v">random_state</span><span class="pl-k">=</span><span class="pl-c1">1</span>, <span class="pl-v">max_iter</span><span class="pl-k">=</span><span class="pl-c1">1000</span>)
+    clf.fit(<span class="pl-c1">X</span>, y)</pre></div>
+
+<p>I loaded the images the same way as I did using PyBrain and found a drastic speed boost using Sci-Kit learn. I could load 4 times as many images in a sixth of the time.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/jfelzone/cs5660AI">Cs5660ai</a> is maintained by <a href="https://github.com/jfelzone">jfelzone</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
