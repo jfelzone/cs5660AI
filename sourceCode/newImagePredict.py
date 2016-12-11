@@ -122,9 +122,9 @@ if __name__ == "__main__":
 		countList = []
 		start = min(imgHash)
 		print 'here is the minimum value:', start, imgHash[start]
-
-		for i in range(3,50):
-			#i = random.randint(0, (len(imgHash)+200))
+		
+		while len(countList) < 30:
+			i = random.randint(3, (len(imgHash)+200))
 			if i not in countList:
 				try:
 					if abs(float(imgHash['img_'+str(i)+'.png']) - np.mean(outlierTotalList)) < m * np.std(outlierTotalList):
@@ -137,7 +137,6 @@ if __name__ == "__main__":
 						countList.append(i)
 				except:
 					print "Image does not exist, cannot be added to training data"
-
 #		print "Performing feature selection..."
 #		print "Dimensionality reduction... \n"
 #		print "Length before reduction:", len(X[0])
@@ -149,9 +148,9 @@ if __name__ == "__main__":
 #		time.sleep(100)
 		print "Training the classifier"
 		# i want to see how slow NN is now
-		clf = MLPClassifier(activation='logistic', solver='lbfgs', alpha=0.001, hidden_layer_sizes=(35, 20), random_state=1, max_iter=1000)
+		clf = MLPClassifier(activation='logistic', solver='lbfgs', alpha=0.001, hidden_layer_sizes=(80, 40, 40, 20), random_state=1, max_iter=500, verbose = True)
 		#clf = svm.SVC()
-		#clf = RandomForestClassifier(n_estimators=500)
+		#clf = RandomForestClassifier(n_estimators=100)
 		clf.fit(X, y)
 
 		#this was a single test to see if we had a complete model, good to go

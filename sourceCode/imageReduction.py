@@ -16,6 +16,7 @@ from sklearn.svm import SVR
 from sklearn.pipeline import Pipeline
 from scipy import ndimage
 from PIL import Image
+from sklearn import svm
 
 accountName = 'loki_the_wolfdog_SMALL'
 accountName = 'destination_wild'
@@ -60,7 +61,7 @@ def loadAccounts():
 	readFile = open(logdirectory, 'r')
 	accountList = []
 	for line in readFile:
-		if line.split()[0] not in accountList and len(accountList) < 10:
+		if line.split()[0] not in accountList and len(accountList) < 20:
 			accountList.append(line.split()[0])
 	return accountList
 
@@ -93,7 +94,9 @@ if __name__ == "__main__":
 		#this was for simple memory testing purposes, only wanted to limit to one account and see what happens
 		#if index > 0:
 		#	break
-		if accountName == 'celebrity_food' or accountName == 'milo_french_bulldog' or accountName == 'tristin_sugi' or accountName == 'dogs_of_instagram' or accountName == 'star_wars':
+		#if accountName == 'celebrity_food' or accountName == 'milo_french_bulldog' or accountName == 'tristin_sugi' or accountName == 'dogs_of_instagram' or accountName == 'star_wars' or accountName == 'food_collections':
+		#	continue
+		if accountName == 'milo_french_bulldog' or accountName == 'celebrity_food' or accountName == 'tristin_sugi':
 			continue
 		X = []
 		y = []
@@ -120,7 +123,7 @@ if __name__ == "__main__":
 		#for i in range(0,100):
 		countList = []
 
-		while len(countList) < 150:
+		while len(countList) < 80:
 			i = random.randint(0, (len(imgHash)+200))
 			if i not in countList:
 				try:
@@ -135,6 +138,8 @@ if __name__ == "__main__":
 				except:
 					print "Image does not exist, cannot be added to training data"
 
+		print len(countList)
+		#time.sleep(10)
 #		print "Performing feature selection..."
 #		print "Dimensionality reduction... \n"
 #		print "Length before reduction:", len(X[0])
@@ -146,9 +151,9 @@ if __name__ == "__main__":
 #		time.sleep(100)
 		print "Training the classifier"
 		# i want to see how slow NN is now
-		#clf = MLPClassifier(activation='logistic', solver='lbfgs', alpha=0.001, hidden_layer_sizes=(35, 20), random_state=1, max_iter=1000)
-		#clf = svm.SVC()
-		clf = RandomForestClassifier(n_estimators=500)
+		clf = MLPClassifier(activation='logistic', solver='lbfgs', alpha=0.001, hidden_layer_sizes=(150,), random_state=1, max_iter=500, verbose = True)
+		#clf = svm.SVC(gamma=0.001, C=100)
+		#clf = RandomForestClassifier(n_estimators=200)
 		clf.fit(X, y)
 
 		#this was a single test to see if we had a complete model, good to go
@@ -165,8 +170,8 @@ if __name__ == "__main__":
 		totalValue = 0.0
 
 		#for i in range(100, 200):
-		while len(countList) < 300:
-			i = random.randint(0, (len(imgHash)+200))
+		while len(countList) < 100:
+			i = random.randint(0, (len(imgHash)+50))
 			if i not in countList:
 				try:
 					if abs(float(imgHash['img_'+str(i)+'.png']) - np.mean(outlierTotalList)) < m * np.std(outlierTotalList):
@@ -182,7 +187,7 @@ if __name__ == "__main__":
 						else:
 							totalValue+=1
 				except:
-					print 'image does not exist, unable to test'
+					print 'image does not exist, unable to test ---- ', accountName , len(countList), i
 		tensPlaceComparison = correctValue/totalValue
 		print "\n\nRandom Forest"
 		print "\n\nError Analysis:"
