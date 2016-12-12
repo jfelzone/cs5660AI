@@ -2,7 +2,7 @@
 # this will be an image reduction attempt at using the svm and random forest average again
 # same code as image Reduction but testing improved accuracy
 
-
+from sklearn.neural_network import MLPClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import svm
 import time
@@ -133,8 +133,10 @@ if __name__ == "__main__":
 		print("On Index:", index, "   account Name = ", accountName)
 		print ("Training the classifier")
 		#clf = MLPClassifier(activation='logistic', solver='lbfgs', alpha=0.001, hidden_layer_sizes=(100, 50, 50, 50, 50, 50), random_state=1, max_iter=2000)
-		clf = RandomForestClassifier(n_estimators=300)
+		clf = RandomForestClassifier(n_estimators=100)
 		clf2 = svm.SVC(gamma=0.001, C=100)
+		#clf2 = MLPClassifier(activation='logistic', solver='lbfgs', alpha=0.001, hidden_layer_sizes=(60, 40, 100, 200), random_state=1, max_iter=50, verbose = True)
+
 		clf.fit(X, y)
 		clf2.fit(X, y)
 
