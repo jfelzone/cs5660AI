@@ -1,25 +1,18 @@
 #Jake Felzien
-# this file will be used to play around with a much much smaller image read.. 
-	# first we are just playing with tests
+# this will be an image reduction attempt at using the svm and random forest average again
+# same code as image Reduction but testing improved accuracy
 
-from sklearn.feature_selection import VarianceThreshold
-from sklearn.neural_network import MLPClassifier
+
 from sklearn.ensemble import RandomForestClassifier
+from sklearn import svm
 import time
 import cv2
 import random
 import numpy as np
-from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import chi2
-from sklearn.feature_selection import RFE
-from sklearn.svm import SVR
-from sklearn.pipeline import Pipeline
-from scipy import ndimage
 from PIL import Image
-from sklearn import svm
 
 accountName = 'loki_the_wolfdog_SMALL'
-accountName = 'destination_wild'
+#accountName = 'destination_wild'
 
 #this will be a directory variable in which i plan to put the directory to the images, as well as the log file, i wish to access
 imgdirectory = '/home/jfelzien/Desktop/cs5660/neuralNetFeed/images/'+accountName+'/'
@@ -56,15 +49,13 @@ def avgErrorCalc(actualAr, expAr):
 		total += i 
 	return total/len(resultarray)
 
-
 def loadAccounts():
 	readFile = open(logdirectory, 'r')
 	accountList = []
 	for line in readFile:
-		if line.split()[0] not in accountList and len(accountList) < 20:
+		if line.split()[0] not in accountList and len(accountList) < 40:
 			accountList.append(line.split()[0])
 	return accountList
-
 
 def smallImageLoad(path):
 	image = Image.open(path).convert('L')
@@ -77,13 +68,8 @@ def smallImageLoad(path):
 	return oneDpixelArray
 
 
+
 if __name__ == "__main__":
-	array = smallImageLoad(imgdirectory+'img_0.png')
-	print array
-	print len(array)
-
-
-
 	startTime = time.time()
 	overallPercentErrorDist = []
 	#now we are going to do a quick test with all of the accounts to compare and analyze all of the results
@@ -94,28 +80,31 @@ if __name__ == "__main__":
 		#this was for simple memory testing purposes, only wanted to limit to one account and see what happens
 		#if index > 0:
 		#	break
-		#if accountName == 'celebrity_food' or accountName == 'milo_french_bulldog' or accountName == 'tristin_sugi' or accountName == 'dogs_of_instagram' or accountName == 'star_wars' or accountName == 'food_collections':
-		#	continue
-		if accountName == 'milo_french_bulldog' or accountName == 'celebrity_food' or accountName == 'tristin_sugi':
+		if accountName == 'celebrity_food' or accountName == 'milo_french_bulldog' or accountName == 'tristin_sugi':
 			continue
 		X = []
 		y = []
 		imgHash = loadHash(logdirectory, accountName)
 		#this is an inital tester, make sure to comment this out later
-		#t = loadImage(imgdirectory+'img_0.png')
-		#print t
+		t = loadImage(imgdirectory+'img_0.png')
+		print (t)
 		#print "length of t:", len(t)
+
 		print(imgHash)
+		print len(imgHash)
+		#time.sleep(30)
 		#now we need to load all of these values somewhere to test for outliers... 
 			#jam it in a list
 		outlierTotalList= []
 		for i in imgHash:
 			outlierTotalList.append(int(imgHash[i]))
-		print('here we go:')
-		print(outlierTotalList)
-		print(np.mean(outlierTotalList))
-		print(np.std(outlierTotalList))
+#		print('here we go:')
+#		print(outlierTotalList)
+#		print(np.mean(outlierTotalList))
+#		print(np.std(outlierTotalList))
 		m = 2
+
+		#time.spleep(30)
 		#now lets load all of the images into our massive array
 		#don't forget to add an outlier check. load all of the total like counts into a list and do a similar technique to the plotting file
 		#also, I need to implement a random selection and keep track of it, where i select 50 random images or so for training
@@ -123,7 +112,10 @@ if __name__ == "__main__":
 		#for i in range(0,100):
 		countList = []
 
-		while len(countList) < 80:
+		i = 0
+		smallImageLoad(imgdirectory+'img_'+str(i)+'.png')
+
+		while len(countList) < 90:
 			i = random.randint(0, (len(imgHash)+80))
 			if i not in countList:
 				try:
@@ -136,25 +128,15 @@ if __name__ == "__main__":
 						y.append(imgHash['img_'+str(i)+'.png'])
 						countList.append(i)
 				except:
-					print "Image does not exist, cannot be added to training data"
+					print ("Image does not exist, cannot be added to training data")
 
-		print len(countList)
-		#time.sleep(10)
-#		print "Performing feature selection..."
-#		print "Dimensionality reduction... \n"
-#		print "Length before reduction:", len(X[0])
-#		sel = VarianceThreshold(threshold = 800)
-#		sel.fit(X,y)
-#		X = sel.transform(X)
-#		print X
-#		print "Length after reduction:", len(X[0]) , "\n"
-#		time.sleep(100)
-		print "Training the classifier"
-		# i want to see how slow NN is now
-		#clf = MLPClassifier(activation='logistic', solver='lbfgs', alpha=0.001, hidden_layer_sizes=(150,), random_state=1, max_iter=500, verbose = True)
-		#clf = svm.SVC(gamma=0.001, C=100)
-		clf = RandomForestClassifier(n_estimators=200)
+		print("On Index:", index, "   account Name = ", accountName)
+		print ("Training the classifier")
+		#clf = MLPClassifier(activation='logistic', solver='lbfgs', alpha=0.001, hidden_layer_sizes=(100, 50, 50, 50, 50, 50), random_state=1, max_iter=2000)
+		clf = RandomForestClassifier(n_estimators=300)
+		clf2 = svm.SVC(gamma=0.001, C=100)
 		clf.fit(X, y)
+		clf2.fit(X, y)
 
 		#this was a single test to see if we had a complete model, good to go
 		#print "Printing results of image 0"
@@ -164,22 +146,26 @@ if __name__ == "__main__":
 		actual = []
 		experimental = []
 
-
 		tensPlaceComparison = 0.0
 		correctValue = 0.0
 		totalValue = 0.0
 
+		#this needs to be fixed
+		#t = loadImage(imgdirectory+'img_0.png')
+		#experimentalVal = ((float(clf.predict([t])[0]) + float(clf2.predict([t])[0])) / 2)
+
 		#for i in range(100, 200):
-		while len(countList) < 100:
+		while len(countList) < 120:
 			i = random.randint(0, (len(imgHash)+80))
 			if i not in countList:
 				try:
 					if abs(float(imgHash['img_'+str(i)+'.png']) - np.mean(outlierTotalList)) < m * np.std(outlierTotalList):
 						t = smallImageLoad(imgdirectory+'img_'+str(i)+'.png')
 						t.append(i)
-						print "Experimental:", clf.predict([t]) , "     Actual:" , imgHash['img_'+str(i)+'.png']
+						experimentalVal = ((float(clf.predict([t])[0]) + float(clf2.predict([t])[0])) / 2)
+						print ("Experimental:", experimentalVal , "     Actual:" , imgHash['img_'+str(i)+'.png'])
 						actual.append(float(imgHash['img_'+str(i)+'.png']))
-						experimental.append(float(clf.predict([t])[0]))
+						experimental.append(float(experimentalVal))
 						countList.append(i)
 						if len(str(float(clf.predict([t])[0]))) == len(str(float(imgHash['img_'+str(i)+'.png']))):
 							correctValue+=1
@@ -187,17 +173,15 @@ if __name__ == "__main__":
 						else:
 							totalValue+=1
 				except:
-					print 'image does not exist, unable to test ---- ', accountName , len(countList), i
+					print ('image does not exist, unable to test')
 		tensPlaceComparison = correctValue/totalValue
-		print "\n\nRandom Forest"
-		print "\n\nError Analysis:"
-		print "Average Error:", avgErrorCalc(actual, experimental)
-		print "Done Executing"
-		print "Time to execute: ", time.time() - startTime , " seconds"
-		print "Time to execute: ", (time.time() - startTime)/60 , " minutes"
-		print "Time to execute: ", ((time.time() - startTime)/60)/60 ,  " hours"
+		print ("\n\nError Analysis:")
+		print ("Average Error:", avgErrorCalc(actual, experimental))
+		print ('\n New Metric Check:', tensPlaceComparison)
+		print ("Time to execute: ", time.time() - startTime , " seconds")
+		print ("Time to execute: ", (time.time() - startTime)/60 , " minutes")
+		print ("Time to execute: ", ((time.time() - startTime)/60)/60 ,  " hours")
 		overallPercentErrorDist.append((accountName, tensPlaceComparison, avgErrorCalc(actual, experimental)))
-
 avgList = []
 avgList2 = []
 print('\n\n\n')
@@ -206,6 +190,7 @@ for i in overallPercentErrorDist:
 	avgList.append(i[2])
 	avgList2.append(i[1])
 
+print "SVM and RanForest COMBO\n\n"
 print '\n\n\n Average Calc:', np.mean(avgList) 
 print "Precision by tens:", np.mean(avgList2)
 
@@ -213,4 +198,3 @@ print ("Time to execute: ", time.time() - startTime , " seconds")
 print ("Time to execute: ", (time.time() - startTime)/60 , " minutes")
 print ("Time to execute: ", ((time.time() - startTime)/60)/60 ,  " hours")
 print ("Done Executing")
-
